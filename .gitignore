@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+allure-results/
+core/__pycache__/driver_factory.cpython-313.pyc
+*/__pycache__/*
+*/__pycache__
+*.log
+*.tmp
+core/__pycache__/driver_factory.cpython-313.pyc
+core/*
+core/__pycache__/driver_factory.cpython-313.pyc
+core/__pycache__/driver_factory.cpython-313.pyc
