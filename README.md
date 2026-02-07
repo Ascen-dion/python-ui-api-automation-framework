@@ -1,6 +1,6 @@
 # Python UI + API Automation Framework
 
-A production-style **test automation framework template** built using:
+A **test automation framework** built using:
 
 - Python
 - Pytest
