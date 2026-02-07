@@ -7,4 +7,6 @@ allure-results/
 */__pycache__
 *.log
 *.tmp
+allure-report/
+reports/
 
