@@ -9,6 +9,8 @@ class SauceDemoLoginPage(BasePage):
     PASSWORD = (By.ID, "password")
     LOGIN_BTN = (By.ID, "login-button")
     INVENTORY_CONTAINER = (By.ID, "inventory_container")
+    ERROR_MSG = (By.CSS_SELECTOR, "h3[data-test='error']")
+
 
     @allure.step("Login with username: {username}")
     def login(self, username, password):
@@ -19,3 +21,7 @@ class SauceDemoLoginPage(BasePage):
     @allure.step("Verify inventory page loaded")
     def verify_home_loaded(self):
         assert self.ui.is_visible(self.INVENTORY_CONTAINER)
+
+    @allure.step("Verify login error message is displayed")
+    def verify_login_error(self):
+        assert self.ui.is_visible(self.ERROR_MSG)
