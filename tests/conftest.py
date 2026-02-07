@@ -2,20 +2,28 @@ import pytest
 import yaml
 from core.driver_factory import DriverFactory
 
+
 @pytest.fixture(scope="session")
 def config():
     with open("config/config.yaml") as f:
         return yaml.safe_load(f)
 
+
 @pytest.fixture
 def driver(config):
-    driver = DriverFactory.get_driver(config["browser"])
+    driver = DriverFactory.get_driver(
+        browser=config["browser"],
+        execution=config.get("execution", "local"),
+        remote_url=config.get("remote_url"),
+    )
     yield driver
     driver.quit()
+
 
 @pytest.fixture
 def base_url(config):
     return config["base_url"]
+
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):
