@@ -1,0 +1,6 @@
+selenium
+pytest
+requests
+pyyaml
+pytest-xdist
+allure-pytest
