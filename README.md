@@ -187,6 +187,15 @@ Serve report:
 allure serve reports
 ```
 
+## How to see report
+
+Steps to see allure report from artifacts
+
+- unzip → cd allure-report
+- After downloading and extracting the artifact, run this inside the allure-report folder:
+- python -m http.server 8080
+- <http://localhost:8080>
+
 ---
 
 ## Recommended Future Enhancements
