@@ -15,7 +15,6 @@ class AmazonHomePage(BasePage):
 
     @allure.step("Verify search results page is loaded")
     def verify_results_loaded(self):
-        import allure
         allure.attach(self.driver.current_url, "Current URL")
         assert "s?k=" in self.driver.current_url
 
