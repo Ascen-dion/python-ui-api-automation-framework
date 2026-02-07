@@ -9,4 +9,5 @@ allure-results/
 *.tmp
 allure-report/
 reports/
+config/config.yaml
 
