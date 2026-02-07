@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 class DriverFactory:
@@ -14,6 +13,12 @@ class DriverFactory:
         if execution == "remote":
             if browser == "chrome":
                 options = ChromeOptions()
+                options.add_argument("--headless=new")
+                options.add_argument("--window-size=1920,1080")
+                options.add_argument("--no-sandbox")
+                options.add_argument("--disable-dev-shm-usage")
+                options.add_argument("--disable-gpu")
+
                 return webdriver.Remote(
                     command_executor=remote_url,
                     options=options

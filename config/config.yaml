@@ -1,5 +1,5 @@
 browser: chrome
-base_url: https://www.amazon.in
+base_url: https://www.amazon.com
 timeout: 10
 execution: remote # Options: local, remote
 remote_url: http://localhost:4444/wd/hub

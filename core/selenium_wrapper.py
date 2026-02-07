@@ -8,14 +8,14 @@ class SeleniumWrapper:
     def __init__(self, driver):
         self.driver = driver
 
-    def click(self, locator, timeout=10):
+    def click(self, locator, timeout=20):
         with allure.step(f"Click element: {locator}"):
             element = WebDriverWait(self.driver, timeout).until(
                 EC.element_to_be_clickable(locator)
             )
             element.click()
 
-    def enter_text(self, locator, text, timeout=10):
+    def enter_text(self, locator, text, timeout=20):
         with allure.step(f"Enter text '{text}' into element: {locator}"):
             element = WebDriverWait(self.driver, timeout).until(
                 EC.visibility_of_element_located(locator)
@@ -23,7 +23,7 @@ class SeleniumWrapper:
             element.clear()
             element.send_keys(text)
 
-    def is_visible(self, locator, timeout=10):
+    def is_visible(self, locator, timeout=20):
         with allure.step(f"Verify element is visible: {locator}"):
             WebDriverWait(self.driver, timeout).until(
                 EC.visibility_of_element_located(locator)
