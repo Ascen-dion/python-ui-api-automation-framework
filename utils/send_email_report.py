@@ -39,20 +39,21 @@ def parse_pytest_output(file_path):
 def send_email(report_text):
     sender = os.environ["EMAIL_SENDER"]
     password = os.environ["EMAIL_PASSWORD"]
+    receivers = os.environ["EMAIL_RECEIVER"]
 
-    # comma-separated receivers
-    receivers = os.getenv("EMAIL_RECEIVERS", "")
-    receiver_list = [r.strip() for r in receivers.split(",") if r.strip()]
+    # Support multiple emails separated by comma
+    receiver_list = [email.strip() for email in receivers.split(",") if email.strip()]
 
     msg = MIMEText(report_text)
-    msg["Subject"] = "Automation Test Report"
+    msg["Subject"] = "CI Automation Test Report"
     msg["From"] = sender
     msg["To"] = ", ".join(receiver_list)
 
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
         server.login(sender, password)
-        server.send_message(msg)
+        server.sendmail(sender, receiver_list, msg.as_string())
+
 
 
 if __name__ == "__main__":
