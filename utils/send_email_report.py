@@ -49,10 +49,10 @@ def send_email(report_text):
     msg["From"] = sender
     msg["To"] = ", ".join(receiver_list)
 
-    with smtplib.SMTP("smtp.office365.com", 587) as server:
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
         server.login(sender, password)
-        server.sendmail(sender, receiver_list, msg.as_string())
+        server.send_message(msg)
 
 
 if __name__ == "__main__":
