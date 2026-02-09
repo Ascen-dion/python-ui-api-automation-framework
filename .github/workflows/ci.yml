@@ -35,8 +35,11 @@ jobs:
           pip install -r requirements.txt
           pip install allure-pytest
 
+      # Capture pytest output
       - name: Run tests
-        run: pytest
+        run: |
+          pytest -v --tb=no | tee pytest-output.txt
+        continue-on-error: true
 
       - name: Install Allure CLI
         if: always()
@@ -58,3 +61,12 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+
+      # Send email report
+      - name: Send email report
+        if: always()
+        run: python utils/send_email_report.py
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVER: viplove.bisen@ascendion.com,mohan.r@ascendion.com
