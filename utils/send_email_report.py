@@ -12,24 +12,26 @@ def parse_pytest_output(file_path):
             line = line.strip()
 
             if "::" in line and "PASSED" in line:
-                passed.append(line)
+                test_name = line.split(" ")[0]
+                passed.append(test_name)
 
             if "::" in line and "FAILED" in line:
-                failed.append(line)
+                test_name = line.split(" ")[0]
+                failed.append(test_name)
 
     report = []
-    report.append("Automation Test Report\n")
+    report.append("AUTOMATION TEST REPORT\n")
     report.append(f"Total Passed: {len(passed)}")
     report.append(f"Total Failed: {len(failed)}\n")
 
     if passed:
-        report.append("PASSED TESTS:")
-        report.extend(passed)
+        report.append("PASSED TEST CASES:")
+        report.extend(f"  - {t}" for t in passed)
         report.append("")
 
     if failed:
-        report.append("FAILED TESTS:")
-        report.extend(failed)
+        report.append("FAILED TEST CASES:")
+        report.extend(f"  - {t}" for t in failed)
 
     return "\n".join(report)
 
@@ -37,17 +39,20 @@ def parse_pytest_output(file_path):
 def send_email(report_text):
     sender = os.environ["EMAIL_SENDER"]
     password = os.environ["EMAIL_PASSWORD"]
-    receiver = os.environ["EMAIL_RECEIVER"]
+
+    # comma-separated receivers
+    receivers = os.getenv("EMAIL_RECEIVERS", "")
+    receiver_list = [r.strip() for r in receivers.split(",") if r.strip()]
 
     msg = MIMEText(report_text)
     msg["Subject"] = "Automation Test Report"
     msg["From"] = sender
-    msg["To"] = receiver
+    msg["To"] = ", ".join(receiver_list)
 
     with smtplib.SMTP("smtp.office365.com", 587) as server:
         server.starttls()
         server.login(sender, password)
-        server.send_message(msg)
+        server.sendmail(sender, receiver_list, msg.as_string())
 
 
 if __name__ == "__main__":
